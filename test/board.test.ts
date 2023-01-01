@@ -1,4 +1,5 @@
 import { fillPositions } from "../Algs";
+import { describe, it } from "vitest";
 import { strict as assert } from "assert";
 
 const R = "R";
