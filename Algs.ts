@@ -397,6 +397,24 @@ function getTimeElapsed(startTime: number): number {
   return seconds;
 }
 
+export function generateClassicBoard(
+  seed: string,
+  pieces: Record<string, number>,
+  size: number,
+  count: number,
+  id: number
+) {
+  const random = new Random(seed);
+  const filledPositions = fillPositions(
+    generateBoard(random, id, pieces, size, count, Array(size * size).fill(0))
+  );
+  return filledPositions.map((pos) => ({
+    value: pos,
+    known: false,
+    attackedValue: 0,
+  }));
+}
+
 export function generatePuzzleBoard(
   seed: string,
   pieces: Record<string, number>,
@@ -550,7 +568,9 @@ export function generatePuzzleBoard(
             }
           }
           for (let i = emptyCasesAfter; i > difficulty; i--) {
-            const rand: number = Math.floor(random.next() * possibleTarget.length);
+            const rand: number = Math.floor(
+              random.next() * possibleTarget.length
+            );
             discovered[possibleTarget[rand]] = true;
             possibleTarget.splice(rand, 1).indexOf(rand);
           }
