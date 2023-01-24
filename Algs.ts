@@ -397,6 +397,23 @@ function getTimeElapsed(startTime: number): number {
   return seconds;
 }
 
+export function generateReverseBoard(
+  seed: string,
+  pieces: Record<string, number>,
+  size: number,
+  count: number
+) {
+  const random = new Random(seed);
+  const filledPositions = fillPositions(
+    generateBoard(random, -1, pieces, size, count, Array(size * size).fill(0))
+  );
+  return filledPositions.map((pos) => ({
+    value: pos,
+    known: isNaN(Number(pos)),
+    attackedValue: 0,
+  }));
+}
+
 export function generateClassicBoard(
   seed: string,
   pieces: Record<string, number>,
